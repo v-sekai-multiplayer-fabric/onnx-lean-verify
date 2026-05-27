@@ -16,7 +16,7 @@ jobs:
           build: true
           test: false
           lint: false
-          use-mathlib-cache: false
+          use-mathlib-cache: true
 
       - name: Verify zero sorry
         run: |
