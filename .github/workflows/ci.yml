@@ -1,0 +1,59 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: leanprover/lean-action@v1
+        with:
+          build: true
+          test: false
+          lint: false
+          use-mathlib-cache: false
+
+      - name: Verify zero sorry
+        run: |
+          if grep -rn '\bsorry\b' OnnxLeanVerify/ --include='*.lean' | grep -v '\-\-'; then
+            echo "::error::Found sorry in codebase"
+            exit 1
+          fi
+          echo "Zero sorry confirmed"
+
+      - name: Install slangc and Vulkan
+        run: |
+          brew install --cask shader-slang || true
+          brew install vulkan-loader vulkan-headers molten-vk || true
+
+      - name: Compile to SPIR-V (Vulkan)
+        run: |
+          for f in build/shaders/*.slang; do
+            [ -f "$f" ] || continue
+            name=$(basename "$f" .slang)
+            slangc "$f" -target spirv -o "build/shaders/${name}.spv" -entry "${name}_kernel" || echo "slangc spirv failed for $name"
+          done
+          ls build/shaders/*.spv 2>/dev/null || echo "No SPIR-V files generated"
+
+      - name: Compile to Metal
+        run: |
+          for f in build/shaders/*.slang; do
+            [ -f "$f" ] || continue
+            name=$(basename "$f" .slang)
+            slangc "$f" -target metal -o "build/shaders/${name}.metal" -entry "${name}_kernel" || echo "slangc metal failed for $name"
+          done
+          ls build/shaders/*.metal 2>/dev/null || echo "No Metal files generated"
+
+      - name: Compile to CPU C++
+        run: |
+          for f in build/shaders/*.slang; do
+            [ -f "$f" ] || continue
+            name=$(basename "$f" .slang)
+            slangc "$f" -target cpp -o "build/shaders/${name}.cpp" -entry "${name}_kernel" || echo "slangc cpp failed for $name"
+          done
+          ls build/shaders/*.cpp 2>/dev/null || echo "No CPU files generated"
