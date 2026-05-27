@@ -5,3 +5,4 @@ import OnnxLeanVerify.Tensor
 import OnnxLeanVerify.Semantics
 import OnnxLeanVerify.MicroOps
 import OnnxLeanVerify.Opset1.Catalog
+import OnnxLeanVerify.Codegen.MicroOpShaders

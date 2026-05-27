@@ -3,5 +3,11 @@ version = "0.1.0"
 keywords = ["onnx", "verification"]
 defaultTargets = ["OnnxLeanVerify"]
 
+[[require]]
+name = "LeanSlang"
+scope = "V-Sekai-fire"
+git = "https://github.com/V-Sekai-fire/lean-slang.git"
+rev = "main"
+
 [[lean_lib]]
 name = "OnnxLeanVerify"

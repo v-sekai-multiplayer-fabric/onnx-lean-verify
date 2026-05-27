@@ -1,6 +1,16 @@
 {"version": "1.2.0",
  "packagesDir": ".lake/packages",
- "packages": [],
+ "packages":
+ [{"url": "https://github.com/V-Sekai-fire/lean-slang.git",
+   "type": "git",
+   "subDir": null,
+   "scope": "V-Sekai-fire",
+   "rev": "813d6c62b298bcd3f7177264179a7e1d16bd87cd",
+   "name": "LeanSlang",
+   "manifestFile": "lake-manifest.json",
+   "inputRev": "main",
+   "inherited": false,
+   "configFile": "lakefile.toml"}],
  "name": "OnnxLeanVerify",
  "lakeDir": ".lake",
  "fixedToolchain": false}
