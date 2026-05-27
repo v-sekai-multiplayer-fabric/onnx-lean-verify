@@ -6,3 +6,7 @@ import OnnxLeanVerify.Semantics
 import OnnxLeanVerify.MicroOps
 import OnnxLeanVerify.Opset1.Catalog
 import OnnxLeanVerify.Codegen.MicroOpShaders
+import OnnxLeanVerify.Opset2.Catalog
+import OnnxLeanVerify.Opset3.Catalog
+import OnnxLeanVerify.Opset4.Catalog
+import OnnxLeanVerify.Opset5.Catalog
