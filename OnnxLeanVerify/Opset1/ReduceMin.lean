@@ -6,8 +6,13 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX ReduceMin: micro-op decomposition (implementation pending)
-def decompReduceMin : Unit := sorry
+def onnxReduceMin (arr : Array Int) (h : arr.size > 0) : Int :=
+  arr.foldl (fun a b => if b < a then b else a) (arr[0]'h)
+def decompReduceMin (arr : Array Int) (_ : arr.size > 0) : Int :=
+  evalU .neg (evalR .max (arr.map (evalU .neg)))
+theorem reduceMin_equiv (arr : Array Int) (h : arr.size > 0) :
+    decompReduceMin arr h = onnxReduceMin arr h := sorry
+
 def metaReduceMin : OpMeta := { name := "ReduceMin", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

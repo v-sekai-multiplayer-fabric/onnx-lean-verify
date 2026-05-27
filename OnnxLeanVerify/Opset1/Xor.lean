@@ -12,8 +12,8 @@ def onnxXor (x y : Int) : Int :=
   if bx = by_ then 0 else 1
 def decompXor (x y : Int) : Int := evalB .cmpne (evalB .cmpne x 0) (evalB .cmpne y 0)
 theorem xor_equiv (x y : Int) : decompXor x y = onnxXor x y := by
-  simp only [decompXor, onnxXor, evalB]
-  by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> simp_all
+  simp only [decompXor, onnxXor, evalB]; by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> simp_all
+
 def metaXor : OpMeta := { name := "Xor", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

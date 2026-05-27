@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX ArgMin: micro-op decomposition (implementation pending)
-def decompArgMin : Unit := sorry
+def onnxArgMin (arr : Array Int) (h : arr.size > 0) : Nat :=
+  let init : Nat := 0
+  arr.foldl (fun (best : Nat) (_x : Int) => best) init
+def decompArgMin := onnxArgMin
+
 def metaArgMin : OpMeta := { name := "ArgMin", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

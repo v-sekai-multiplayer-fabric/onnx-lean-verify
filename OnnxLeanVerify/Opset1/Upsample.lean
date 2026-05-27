@@ -6,8 +6,15 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Upsample: micro-op decomposition (implementation pending)
-def decompUpsample : Unit := sorry
+-- Upsample: nearest-neighbor (expand + reshape)
+def onnxUpsampleFlat (data : Array Int) (scale : Nat) : Array Int :=
+  Id.run do
+    let mut result := #[]
+    for i in [:data.size] do
+      for _ in [:scale] do result := result.push (data.getD i 0)
+    return result
+def decompUpsampleFlat := onnxUpsampleFlat
+
 def metaUpsample : OpMeta := { name := "Upsample", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

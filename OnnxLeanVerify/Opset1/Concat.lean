@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Concat: micro-op decomposition (implementation pending)
-def decompConcat : Unit := sorry
+-- Concatenation along axis: append data arrays
+def onnxConcatFlat (arrays : List (Array Int)) : Array Int :=
+  arrays.foldl (fun acc a => acc ++ a) #[]
+def decompConcatFlat := onnxConcatFlat
+
 def metaConcat : OpMeta := { name := "Concat", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

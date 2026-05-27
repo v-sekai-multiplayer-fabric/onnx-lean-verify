@@ -6,8 +6,10 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Hardmax: micro-op decomposition (implementation pending)
-def decompHardmax : Unit := sorry
+-- hardmax: 1 at argmax position, 0 elsewhere
+def onnxHardmax (x maxVal : Int) : Int := evalB .cmpeq x maxVal
+def decompHardmax := onnxHardmax
+
 def metaHardmax : OpMeta := { name := "Hardmax", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

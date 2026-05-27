@@ -6,8 +6,10 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Reciprocal: micro-op decomposition (implementation pending)
-def decompReciprocal : Unit := sorry
+def onnxReciprocal (x : Int) : Int := evalU .recip x
+def decompReciprocal (x : Int) : Int := evalU .recip x
+theorem reciprocal_equiv (x : Int) : decompReciprocal x = onnxReciprocal x := rfl
+
 def metaReciprocal : OpMeta := { name := "Reciprocal", opsetSince := 1, support := .conditional "division; float boundary", semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Slice: micro-op decomposition (implementation pending)
-def decompSlice : Unit := sorry
+-- Slice: extract sub-array (shrink micro-op)
+def onnxSliceFlat (data : Array Int) (start stop : Nat) : Array Int :=
+  data.toList.drop start |>.take (stop - start) |>.toArray
+def decompSliceFlat := onnxSliceFlat
+
 def metaSlice : OpMeta := { name := "Slice", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

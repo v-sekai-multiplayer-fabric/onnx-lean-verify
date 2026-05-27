@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX AveragePool: micro-op decomposition (implementation pending)
-def decompAveragePool : Unit := sorry
+-- AveragePool: mean over sliding window (reduce micro-op)
+def onnxAveragePoolWindow (window : Array Int) (h : window.size > 0) : Int :=
+  evalR .sum window / window.size
+def decompAveragePoolWindow := onnxAveragePoolWindow
+
 def metaAveragePool : OpMeta := { name := "AveragePool", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

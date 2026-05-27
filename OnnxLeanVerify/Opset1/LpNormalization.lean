@@ -6,8 +6,9 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX LpNormalization: micro-op decomposition (implementation pending)
-def decompLpNormalization : Unit := sorry
+def onnxLpNormElem (x norm : Int) : Int := evalB .cdiv x norm
+def decompLpNormElem := onnxLpNormElem
+
 def metaLpNormalization : OpMeta := { name := "LpNormalization", opsetSince := 1, support := .conditional "Lp norm", semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

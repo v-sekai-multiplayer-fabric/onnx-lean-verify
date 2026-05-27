@@ -6,8 +6,8 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Loop: extensional (PCA realizability, mechanism: .complexDataStructure)
-def decompLoop : Unit := sorry
+def loopDescription : String := "graph-level iteration, potentially non-terminating"
+
 def metaLoop : ExtensionalOpMeta :=
   { toOpMeta := { name := "Loop", opsetSince := 1, support := .conditional "non-terminating", semantics := .extensional, utilization := .native }, mechanism := .complexDataStructure }
 

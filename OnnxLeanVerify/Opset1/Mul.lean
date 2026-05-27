@@ -9,6 +9,7 @@ namespace OnnxLeanVerify.Opset1
 def onnxMul (x y : Int) : Int := x * y
 def decompMul (x y : Int) : Int := evalB .mul x y
 theorem mul_equiv (x y : Int) : decompMul x y = onnxMul x y := by simp [decompMul, onnxMul, evalB]
+
 def metaMul : OpMeta := { name := "Mul", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

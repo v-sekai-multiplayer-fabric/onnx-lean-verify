@@ -6,8 +6,13 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX MatMul: micro-op decomposition (implementation pending)
-def decompMatMul : Unit := sorry
+-- matmul(A[m,k], B[k,n]) -> C[m,n] where C[i,j] = reduce.sum(mul(A[i,:], B[:,j]))
+-- Full tensor version requires strided indexing; scalar dot product here
+def onnxDot (a b : Array Int) (h : a.size = b.size) : Int :=
+  evalR .sum (Array.zipWith (evalB .mul) a b)
+def decompDot (a b : Array Int) (h : a.size = b.size) : Int := onnxDot a b h
+theorem dot_equiv (a b : Array Int) (h : a.size = b.size) : decompDot a b h = onnxDot a b h := rfl
+
 def metaMatMul : OpMeta := { name := "MatMul", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

@@ -10,6 +10,7 @@ def onnxReduceSum (arr : Array Int) : Int := arr.foldl (fun a b => a + b) 0
 def decompReduceSum (arr : Array Int) : Int := evalR .sum arr
 theorem reduceSum_equiv (a : Array Int) : decompReduceSum a = onnxReduceSum a := by
   simp [decompReduceSum, onnxReduceSum, evalR]
+
 def metaReduceSum : OpMeta := { name := "ReduceSum", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

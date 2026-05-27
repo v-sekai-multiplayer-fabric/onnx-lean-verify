@@ -6,8 +6,14 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Tile: micro-op decomposition (implementation pending)
-def decompTile : Unit := sorry
+-- Tile: repeat tensor (expand micro-op)
+def onnxTileFlat (data : Array Int) (repeats : Nat) : Array Int :=
+  Id.run do
+    let mut result := #[]
+    for _ in [:repeats] do result := result ++ data
+    return result
+def decompTileFlat := onnxTileFlat
+
 def metaTile : OpMeta := { name := "Tile", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

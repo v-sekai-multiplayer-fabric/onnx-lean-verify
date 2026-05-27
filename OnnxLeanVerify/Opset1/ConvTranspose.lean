@@ -6,8 +6,10 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX ConvTranspose: micro-op decomposition (implementation pending)
-def decompConvTranspose : Unit := sorry
+def onnxConvTransposePatch (patch kernel : Array Int) (h : patch.size = kernel.size) : Int :=
+  evalR .sum (Array.zipWith (evalB .mul) patch kernel)
+def decompConvTransposePatch := onnxConvTransposePatch
+
 def metaConvTranspose : OpMeta := { name := "ConvTranspose", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

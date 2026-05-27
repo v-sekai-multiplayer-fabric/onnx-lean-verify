@@ -6,8 +6,10 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Squeeze: micro-op decomposition (implementation pending)
-def decompSqueeze : Unit := sorry
+def onnxSqueeze (t : Tensor Int) : Tensor Int :=
+  { shape := t.shape.filter (fun d => d != 1), data := t.data, h_valid := sorry }
+def decompSqueeze := onnxSqueeze
+
 def metaSqueeze : OpMeta := { name := "Squeeze", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

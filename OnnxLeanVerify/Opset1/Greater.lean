@@ -13,6 +13,7 @@ theorem greater_equiv (x y : Int) : decompGreater x y = onnxGreater x y := by
   by_cases h : y < x <;> by_cases h2 : x > y
   all_goals simp_all
   all_goals omega
+
 def metaGreater : OpMeta := { name := "Greater", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

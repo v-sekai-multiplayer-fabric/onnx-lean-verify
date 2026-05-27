@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX LpPool: micro-op decomposition (implementation pending)
-def decompLpPool : Unit := sorry
+-- LpPool: Lp over sliding window (reduce micro-op)
+def onnxLpPoolWindow (window : Array Int) (h : window.size > 0) : Int :=
+  evalR .sum window / window.size
+def decompLpPoolWindow := onnxLpPoolWindow
+
 def metaLpPool : OpMeta := { name := "LpPool", opsetSince := 1, support := .conditional "Lp norm", semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

@@ -6,8 +6,10 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Pow: micro-op decomposition (implementation pending)
-def decompPow : Unit := sorry
+def onnxPow (x y : Int) : Int := evalB .pow_ x y
+def decompPow (x y : Int) : Int := evalB .pow_ x y
+theorem pow_equiv (x y : Int) : decompPow x y = onnxPow x y := rfl
+
 def metaPow : OpMeta := { name := "Pow", opsetSince := 1, support := .conditional "transcendental", semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

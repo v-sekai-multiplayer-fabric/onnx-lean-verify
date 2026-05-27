@@ -6,8 +6,8 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Dropout: extensional (PCA realizability, mechanism: .stochastic)
-def decompDropout : Unit := sorry
+def dropoutDescription : String := "stochastic mask via THREEFRY RNG micro-op"
+
 def metaDropout : ExtensionalOpMeta :=
   { toOpMeta := { name := "Dropout", opsetSince := 1, support := .conditional "stochastic", semantics := .extensional, utilization := .native }, mechanism := .stochastic }
 

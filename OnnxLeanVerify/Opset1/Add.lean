@@ -9,6 +9,7 @@ namespace OnnxLeanVerify.Opset1
 def onnxAdd (x y : Int) : Int := x + y
 def decompAdd (x y : Int) : Int := evalB .add x y
 theorem add_equiv (x y : Int) : decompAdd x y = onnxAdd x y := by simp [decompAdd, onnxAdd, evalB]
+
 def metaAdd : OpMeta := { name := "Add", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

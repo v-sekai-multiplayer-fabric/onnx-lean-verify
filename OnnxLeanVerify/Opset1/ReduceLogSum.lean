@@ -6,8 +6,10 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX ReduceLogSum: micro-op decomposition (implementation pending)
-def decompReduceLogSum : Unit := sorry
+def onnxReduceLogSum (arr : Array Int) : Int := evalU .log2 (evalR .sum arr)
+def decompReduceLogSum (arr : Array Int) : Int := onnxReduceLogSum arr
+theorem reduceLogSum_equiv (arr : Array Int) : decompReduceLogSum arr = onnxReduceLogSum arr := rfl
+
 def metaReduceLogSum : OpMeta := { name := "ReduceLogSum", opsetSince := 1, support := .conditional "transcendental", semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

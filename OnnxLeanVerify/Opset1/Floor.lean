@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Floor: micro-op decomposition (implementation pending)
-def decompFloor : Unit := sorry
+-- On Int, floor is identity
+def onnxFloor (x : Int) : Int := x
+def decompFloor (x : Int) : Int := evalU .trunc x
+theorem floor_equiv (x : Int) : decompFloor x = onnxFloor x := by simp [decompFloor, onnxFloor, evalU]
+
 def metaFloor : OpMeta := { name := "Floor", opsetSince := 1, support := .conditional "float rounding", semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Transpose: micro-op decomposition (implementation pending)
-def decompTranspose : Unit := sorry
+-- permute micro-op: reorders axes
+def onnxTransposeShape (shape : List Nat) (perm : List Nat) : List Nat :=
+  perm.map (fun i => shape.getD i 0)
+def decompTransposeShape := onnxTransposeShape
+
 def metaTranspose : OpMeta := { name := "Transpose", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

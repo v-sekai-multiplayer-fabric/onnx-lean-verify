@@ -6,8 +6,10 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Size: micro-op decomposition (implementation pending)
-def decompSize : Unit := sorry
+def onnxSize (t : Tensor Int) : Nat := t.shape.volume
+def decompSize (t : Tensor Int) : Nat := t.shape.volume
+theorem size_equiv (t : Tensor Int) : decompSize t = onnxSize t := rfl
+
 def metaSize : OpMeta := { name := "Size", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

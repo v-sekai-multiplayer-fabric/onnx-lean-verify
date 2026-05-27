@@ -6,8 +6,12 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Reshape: micro-op decomposition (implementation pending)
-def decompReshape : Unit := sorry
+def onnxReshape (t : Tensor Int) (s : Shape) (h : s.volume = t.shape.volume) : Tensor Int :=
+  { shape := s, data := t.data, h_valid := by rw [t.h_valid, h] }
+def decompReshape := onnxReshape
+theorem reshape_preserves (t : Tensor Int) (s : Shape) (h : s.volume = t.shape.volume) :
+    (onnxReshape t s h).data = t.data := rfl
+
 def metaReshape : OpMeta := { name := "Reshape", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX SpaceToDepth: micro-op decomposition (implementation pending)
-def decompSpaceToDepth : Unit := sorry
+-- SpaceToDepth = reshape + permute
+def onnxSpaceToDepthShape (n c h_ w bs : Nat) : List Nat :=
+  [n, c * bs * bs, h_ / bs, w / bs]
+def decompSpaceToDepthShape := onnxSpaceToDepthShape
+
 def metaSpaceToDepth : OpMeta := { name := "SpaceToDepth", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

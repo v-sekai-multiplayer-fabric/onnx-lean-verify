@@ -11,6 +11,7 @@ def decompRelu (x : Int) : Int := evalB .max x 0
 theorem relu_equiv (x : Int) : decompRelu x = onnxRelu x := by
   simp only [decompRelu, onnxRelu, evalB]
   by_cases h : x < 0 <;> simp_all <;> omega
+
 def metaRelu : OpMeta := { name := "Relu", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

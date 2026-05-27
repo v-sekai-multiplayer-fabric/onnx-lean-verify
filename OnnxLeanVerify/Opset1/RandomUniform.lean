@@ -6,8 +6,8 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX RandomUniform: extensional (PCA realizability, mechanism: .stochastic)
-def decompRandomUniform : Unit := sorry
+def randomUniformDescription : String := "non-deterministic; THREEFRY counter-based RNG"
+
 def metaRandomUniform : ExtensionalOpMeta :=
   { toOpMeta := { name := "RandomUniform", opsetSince := 1, support := .conditional "non-deterministic", semantics := .extensional, utilization := .native }, mechanism := .stochastic }
 

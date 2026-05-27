@@ -6,8 +6,8 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX RandomNormal: extensional (PCA realizability, mechanism: .stochastic)
-def decompRandomNormal : Unit := sorry
+def randomNormalDescription : String := "non-deterministic; THREEFRY counter-based RNG"
+
 def metaRandomNormal : ExtensionalOpMeta :=
   { toOpMeta := { name := "RandomNormal", opsetSince := 1, support := .conditional "non-deterministic", semantics := .extensional, utilization := .native }, mechanism := .stochastic }
 

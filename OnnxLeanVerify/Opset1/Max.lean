@@ -6,8 +6,13 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Max: micro-op decomposition (implementation pending)
-def decompMax : Unit := sorry
+def onnxVarMax : List Int -> Int
+  | [] => 0  | [x] => x  | x :: xs => evalB .max x (onnxVarMax xs)
+def decompVarMax : List Int -> Int
+  | [] => 0  | [x] => x  | x :: xs => evalB .max x (decompVarMax xs)
+theorem varMax_equiv (xs : List Int) : decompVarMax xs = onnxVarMax xs := by
+  induction xs with | nil => rfl | cons x xs ih => cases xs <;> simp [decompVarMax, onnxVarMax, ih]
+
 def metaMax : OpMeta := { name := "Max", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

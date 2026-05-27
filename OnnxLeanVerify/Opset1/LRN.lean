@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX LRN: micro-op decomposition (implementation pending)
-def decompLRN : Unit := sorry
+-- LRN(x) = x / (bias + alpha/size * sum(x^2))^beta
+def onnxLRNElem (x sumSq bias alpha beta size : Int) : Int :=
+  evalB .cdiv x (evalB .pow_ (evalB .add bias (evalB .cdiv (evalB .mul alpha sumSq) size)) beta)
+def decompLRNElem := onnxLRNElem
+
 def metaLRN : OpMeta := { name := "LRN", opsetSince := 1, support := .conditional "float boundary", semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

@@ -6,8 +6,10 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX LSTM: extensional (PCA realizability, mechanism: .statefulRecurrent)
-def decompLSTM : Unit := sorry
+-- h_t = o_t * tanh(c_t), c_t = f_t * c_{t-1} + i_t * g_t
+def lstmGateElem (x w h_ r bias : Int) : Int :=
+  evalB .add (evalB .add (evalB .mul w x) (evalB .mul r h_)) bias
+
 def metaLSTM : ExtensionalOpMeta :=
   { toOpMeta := { name := "LSTM", opsetSince := 1, support := .full, semantics := .extensional, utilization := .native }, mechanism := .statefulRecurrent }
 

@@ -6,8 +6,12 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX ReduceLogSumExp: micro-op decomposition (implementation pending)
-def decompReduceLogSumExp : Unit := sorry
+def onnxReduceLogSumExp (arr : Array Int) : Int :=
+  evalU .log2 (evalR .sum (arr.map (fun x => evalU .exp2 (evalB .mul x 1))))
+def decompReduceLogSumExp (arr : Array Int) : Int := onnxReduceLogSumExp arr
+theorem reduceLogSumExp_equiv (arr : Array Int) :
+    decompReduceLogSumExp arr = onnxReduceLogSumExp arr := rfl
+
 def metaReduceLogSumExp : OpMeta := { name := "ReduceLogSumExp", opsetSince := 1, support := .conditional "transcendental", semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

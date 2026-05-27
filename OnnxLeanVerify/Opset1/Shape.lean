@@ -6,8 +6,10 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Shape: micro-op decomposition (implementation pending)
-def decompShape : Unit := sorry
+def onnxShape (t : Tensor Int) : List Nat := t.shape
+def decompShape (t : Tensor Int) : List Nat := t.shape
+theorem shape_equiv (t : Tensor Int) : decompShape t = onnxShape t := rfl
+
 def metaShape : OpMeta := { name := "Shape", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

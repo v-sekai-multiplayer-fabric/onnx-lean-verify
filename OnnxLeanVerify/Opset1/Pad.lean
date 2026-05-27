@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX Pad: micro-op decomposition (implementation pending)
-def decompPad : Unit := sorry
+-- Pad: extend tensor with constant value
+def onnxPadFlat (data : Array Int) (padBefore padAfter : Nat) (value : Int) : Array Int :=
+  Array.replicate padBefore value ++ data ++ Array.replicate padAfter value
+def decompPadFlat := onnxPadFlat
+
 def metaPad : OpMeta := { name := "Pad", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1

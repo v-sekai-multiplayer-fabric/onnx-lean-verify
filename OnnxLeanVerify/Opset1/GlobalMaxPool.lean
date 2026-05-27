@@ -6,8 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
--- ONNX GlobalMaxPool: micro-op decomposition (implementation pending)
-def decompGlobalMaxPool : Unit := sorry
+-- GlobalMaxPool: global max over sliding window (reduce micro-op)
+def onnxGlobalMaxPoolWindow (window : Array Int) (h : window.size > 0) : Int :=
+  evalR .max window
+def decompGlobalMaxPoolWindow := onnxGlobalMaxPoolWindow
+
 def metaGlobalMaxPool : OpMeta := { name := "GlobalMaxPool", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
 end OnnxLeanVerify.Opset1
