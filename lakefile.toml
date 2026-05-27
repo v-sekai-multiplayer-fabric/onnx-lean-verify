@@ -4,6 +4,11 @@ keywords = ["onnx", "verification"]
 defaultTargets = ["OnnxLeanVerify"]
 
 [[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.30.0"
+
+[[require]]
 name = "LeanSlang"
 scope = "V-Sekai-fire"
 git = "https://github.com/V-Sekai-fire/lean-slang.git"
