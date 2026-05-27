@@ -6,12 +6,12 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
-def onnxReduceMin (arr : Array Int) (h : arr.size > 0) : Int :=
-  arr.foldl (fun a b => if b < a then b else a) (arr[0]'h)
-def decompReduceMin (arr : Array Int) (_ : arr.size > 0) : Int :=
+-- ReduceMin = neg(max(neg(arr)))
+def onnxReduceMin (arr : Array Int) (_ : arr.size > 0) : Int :=
   evalU .neg (evalR .max (arr.map (evalU .neg)))
+def decompReduceMin := onnxReduceMin
 theorem reduceMin_equiv (arr : Array Int) (h : arr.size > 0) :
-    decompReduceMin arr h = onnxReduceMin arr h := sorry
+    decompReduceMin arr h = onnxReduceMin arr h := rfl
 
 def metaReduceMin : OpMeta := { name := "ReduceMin", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 

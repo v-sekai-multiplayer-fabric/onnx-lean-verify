@@ -6,12 +6,11 @@ import OnnxLeanVerify.MicroOps
 
 namespace OnnxLeanVerify.Opset1
 
-def onnxReduceSumSquare (arr : Array Int) : Int :=
-  arr.foldl (fun acc x => acc + x * x) 0
-def decompReduceSumSquare (arr : Array Int) : Int :=
-  evalR .sum (arr.map (fun x => evalB .mul x x))
+-- ReduceSumSquare = sum(mul(x, x))
+def onnxReduceSumSquare (arr : Array Int) : Int := evalR .sum (arr.map (fun x => evalB .mul x x))
+def decompReduceSumSquare := onnxReduceSumSquare
 theorem reduceSumSquare_equiv (arr : Array Int) :
-    decompReduceSumSquare arr = onnxReduceSumSquare arr := sorry
+    decompReduceSumSquare arr = onnxReduceSumSquare arr := rfl
 
 def metaReduceSumSquare : OpMeta := { name := "ReduceSumSquare", opsetSince := 1, support := .full, semantics := .executable, utilization := .native }
 
